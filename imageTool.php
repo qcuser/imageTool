@@ -230,15 +230,15 @@ class imageTool{
      * @return $this
      * modify by qc  2019/5/28
      */
-    public function addTextmark($image,$content, $size, $font, $output = false,$x=30,$y=110,$is_save=0)
+    public function addTextmark($image,$content, $size, $font,$x=30,$y=110,$is_save=0)
     {
         $imageRes = $this->openAnyImg($image);
-        $color = imagecolorallocatealpha($image, 248, 248, 255, 0);
+        $color = imagecolorallocatealpha($imageRes, 248, 248, 255, 0);
 //        $posX = imagesx($image) - strlen($content) * $size / 2;
 //        $posY = imagesy($image) - $size / 1.5;
         imagettftext($imageRes, $size, 0, $x, $y, $color, $font, $content);
         //得到要保存图片的文件名
-        $newName = $this->createNewName($image);
+        $newName = $this->createNewName($image,'text_');
         //得到保存图片的路劲
         $newPath = rtrim($this->path,'/').'/'.$newName;
         if ($is_save==0) {
@@ -268,10 +268,8 @@ class imageTool{
             header("content-type:image/jpeg");
             imagejpeg($imageRes,$quality);
         }else{
-
             imagejpeg($imageRes,$newPath,$quality);
         }
-
     }
 
     /**
